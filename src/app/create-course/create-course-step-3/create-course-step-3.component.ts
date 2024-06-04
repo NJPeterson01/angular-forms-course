@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -9,5 +9,32 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class CreateCourseStep3Component {
 
+  // Using a form array, we can add multiple formControls instead of replicating them
+  form: FormGroup = this.fb.group({
+    lessons: this.fb.array([])
+  });
+
+  constructor(private fb: FormBuilder) {
+
+  }
+
+  // Getter for lessons array
+  get lessons() {
+    return this.form.controls["lessons"] as FormArray;
+  }
+
+  addLesson(): void {
+    const lessonForm = this.fb.group({
+      title: ['', Validators.required],
+      level: ['beginner', Validators.required]
+    });
+
+    // Calls getter for lessons form control
+    this.lessons.push(lessonForm);
+  }
+
+  deleteLesson(index: number): void {
+    this.lessons.removeAt(index);
+  }
 
 }

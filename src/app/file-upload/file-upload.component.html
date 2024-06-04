@@ -1,2 +1,35 @@
+<!-- 
+    File upload type is required but hard/impossible to style. Best practice
+    is to hide it and build a better interface to interact with it
+-->
+<input
+  type="file"
+  class="file-input"
+  (change)="onFileSelected($event)"
+  #fileUpload
+/>
 
+<!-- UI for file upload -->
+<div class="file-upload">
+  <mat-form-field>
+    <input matInput [disabled]="true" [value]="fileName" />
+  </mat-form-field>
 
+  <!-- Mini fab helps align icons -->
+  <button
+    mat-mini-fab
+    color="primary"
+    class="upload-btn"
+    (click)="onClick(fileUpload)"
+    [disabled]="disabled"
+  >
+    <mat-icon>attach_file</mat-icon>
+  </button>
+</div>
+
+<mat-progress-bar
+  class="progress-bar"
+  mode="determinate"
+  [value]="uploadProgress"
+  *ngIf="uploadProgress"
+></mat-progress-bar>
